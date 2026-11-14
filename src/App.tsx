@@ -129,7 +129,11 @@ function App() {
                   </div>
                   <div className="service-usecase"><span className="service-mini-label">EXAMPLE USE CASES</span><p>{service.useCase}</p></div>
                   <div className="service-stack">{service.stack.map((item) => <span key={item}>{item}</span>)}</div>
-                  <a className="service-inquiry-link" href={`mailto:${EMAIL}?subject=${encodeURIComponent(`Project inquiry: ${service.title}`)}&body=${encodeURIComponent(`Hi Nishant,\n\nI am interested in discussing ${service.title}.\n\nProject context: `)}`}>
+                  <a
+                    className="service-inquiry-link"
+                    href="#contact"
+                    aria-label={`Discuss a ${service.title} project`}
+                  >
                     Discuss a project <ArrowUpRight size={15} />
                   </a>
                 </article>
