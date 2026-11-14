@@ -1,5 +1,5 @@
-import { ArrowLeft, ArrowUpRight, Check, Github, LockKeyhole, Workflow } from "lucide-react";
 import { useEffect } from "react";
+import { ArrowLeft, ArrowUpRight, Check, Github, LockKeyhole, Workflow } from "lucide-react";
 import { Navbar } from "../components/layout/Navbar";
 
 type CaseStudy = {
@@ -67,69 +67,53 @@ export function ProjectCaseStudy() {
   const study = studies.find((item) => item.slug === slug);
 
   useEffect(() => {
-  if (!study) return;
+    if (!study) return;
 
-  const seoData = {
-    "ai-root-cause-investigator": {
-      title: "AI Root Cause Investigator | LangGraph AI Project — Nishant Bhoyar",
-      description:
-        "Explore an AI-powered root cause investigation platform built with Python, LangGraph, FastAPI, PostgreSQL and RAG by Nishant Bhoyar.",
-    },
-    "pdf-chat-rag": {
-      title: "PDF Chat RAG | Document AI Application — Nishant Bhoyar",
-      description:
-        "Explore a PDF question-answering application using retrieval-augmented generation, embeddings, vector search, Python and FastAPI.",
-    },
-    "cybershield-url-scanner": {
-      title: "CyberShield URL Scanner | Python Security Project — Nishant Bhoyar",
-      description:
-        "Explore CyberShield, a Python and FastAPI project focused on URL analysis and security-related signals.",
-    },
-  }[study.slug];
+    const seoBySlug: Record<string, { title: string; description: string }> = {
+      "ai-root-cause-investigator": {
+        title: "AI Root Cause Investigator | LangGraph AI Project — Nishant Bhoyar",
+        description: "Explore an AI-powered investigation platform designed to organize operational evidence and structured root-cause investigations using Python, LangGraph, FastAPI, PostgreSQL and retrieval.",
+      },
+      "pdf-chat-rag": {
+        title: "PDF Chat RAG | Document AI Application — Nishant Bhoyar",
+        description: "Explore a PDF question-answering application using retrieval-augmented generation, embeddings, vector search, Python and FastAPI.",
+      },
+      "cybershield-url-scanner": {
+        title: "CyberShield URL Scanner | Python Security Project — Nishant Bhoyar",
+        description: "Explore CyberShield, a Python and FastAPI project focused on URL analysis and presenting security-related signals.",
+      },
+    };
 
-  if (!seoData) return;
+    const metadata = seoBySlug[study.slug];
+    if (!metadata) return;
 
-  const pageUrl = `https://nishant-bhoyar-portfolio.vercel.app/projects/${study.slug}`;
+    document.title = metadata.title;
+    const setMeta = (selector: string, attribute: string, key: string, content: string) => {
+      let element = document.head.querySelector(selector) as HTMLMetaElement | null;
+      if (!element) {
+        element = document.createElement("meta");
+        element.setAttribute(attribute, key);
+        document.head.appendChild(element);
+      }
+      element.content = content;
+    };
 
-  document.title = seoData.title;
+    const canonicalUrl = `https://nishant-bhoyar-portfolio.vercel.app/projects/${study.slug}`;
+    setMeta('meta[name="description"]', "name", "description", metadata.description);
+    setMeta('meta[property="og:title"]', "property", "og:title", metadata.title);
+    setMeta('meta[property="og:description"]', "property", "og:description", metadata.description);
+    setMeta('meta[property="og:url"]', "property", "og:url", canonicalUrl);
+    setMeta('meta[name="twitter:title"]', "name", "twitter:title", metadata.title);
+    setMeta('meta[name="twitter:description"]', "name", "twitter:description", metadata.description);
 
-  const setMeta = (attribute: string, key: string, content: string) => {
-    let element = document.head.querySelector(
-      `meta[${attribute}="${key}"]`
-    ) as HTMLMetaElement | null;
-
-    if (!element) {
-      element = document.createElement("meta");
-      element.setAttribute(attribute, key);
-      document.head.appendChild(element);
+    let canonical = document.head.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.rel = "canonical";
+      document.head.appendChild(canonical);
     }
-
-    element.content = content;
-  };
-
-  setMeta("name", "description", seoData.description);
-  setMeta("property", "og:title", seoData.title);
-  setMeta("property", "og:description", seoData.description);
-  setMeta("property", "og:url", pageUrl);
-  setMeta("property", "og:type", "article");
-  setMeta("name", "twitter:title", seoData.title);
-  setMeta("name", "twitter:description", seoData.description);
-
-  let canonical = document.querySelector(
-    'link[rel="canonical"]'
-  ) as HTMLLinkElement | null;
-
-  if (!canonical) {
-    canonical = document.createElement("link");
-    canonical.rel = "canonical";
-    document.head.appendChild(canonical);
-  }
-
-  canonical.href = pageUrl;
-
-}, [study]);
-
-
+    canonical.href = canonicalUrl;
+  }, [study]);
 
   if (!study) {
     return <div className="site-shell"><Navbar /><main className="case-not-found section-wrap"><span className="section-label">PROJECT / NOT FOUND</span><h1>This case study<br /><em>isn't available.</em></h1><a className="case-back-link" href="/#projects"><ArrowLeft size={16} /> Back to projects</a></main></div>;
