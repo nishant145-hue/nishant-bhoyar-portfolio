@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-# Add your sitemap URL after choosing and connecting your custom domain.
-# Sitemap: https://YOUR-DOMAIN/sitemap.xml
+Sitemap: https://nishant-bhoyar-portfolio.vercel.app/sitemap.xml

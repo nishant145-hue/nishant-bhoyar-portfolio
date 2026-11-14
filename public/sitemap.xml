@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    <url>
+        <loc>https://nishant-bhoyar-portfolio.vercel.app/</loc>
+    </url>
+
+    <url>
+        <loc>https://nishant-bhoyar-portfolio.vercel.app/projects/ai-root-cause-investigator</loc>
+    </url>
+
+    <url>
+        <loc>https://nishant-bhoyar-portfolio.vercel.app/projects/pdf-chat-rag</loc>
+    </url>
+
+    <url>
+        <loc>https://nishant-bhoyar-portfolio.vercel.app/projects/cybershield-url-scanner</loc>
+    </url>
+
+</urlset>
